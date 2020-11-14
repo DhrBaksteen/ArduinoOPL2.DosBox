@@ -32,6 +32,7 @@
 #include "mame/fmopl.h"
 #include "mame/ymf262.h"
 #include "opl2board/opl2board.h"
+#include "opl3duoboard/opl3duoboard.h"
 
 #define OPL2_INTERNAL_FREQ    3600000   // The OPL2 operates at 3.6MHz
 #define OPL3_INTERNAL_FREQ    14400000  // The OPL3 operates at 14.4MHz
@@ -194,6 +195,38 @@ namespace OPL2BOARD {
 	};
 }
 
+namespace OPL3DUOBOARD {
+	Opl3DuoBoard opl3DuoBoard;
+
+	struct Handler : public Adlib::Handler {
+		Handler(const char* port) {
+			opl3DuoBoard.connect(port);
+		}
+		virtual void WriteReg(Bit32u reg, Bit8u val) {
+			opl3DuoBoard.write(reg, val);
+		}
+		virtual Bit32u WriteAddr(Bit32u port, Bit8u val) {
+			Bit32u reg = val;
+
+			if ((port&3)!=0) {
+				reg |= 0x100;
+			}
+			return reg;
+		}
+
+		virtual void Generate(MixerChannel* chan, Bitu samples) {
+			Bit16s buf[1] = { 0 };
+			chan->AddSamples_m16(1, buf);
+		}
+		virtual void Init(Bitu rate) {
+			opl3DuoBoard.reset();
+		}
+		~Handler() {
+			opl3DuoBoard.reset();
+			opl3DuoBoard.disconnect();
+		}
+	};
+}
 
 #define RAW_SIZE 1024
 
@@ -839,6 +872,9 @@ Module::Module( Section* configuration ) : Module_base(configuration) {
 	} else if (oplemu == "opl2board") {
 		oplmode = OPL_opl2;
 		handler = new OPL2BOARD::Handler(oplport.c_str());
+	} else if (oplemu == "opl3duoboard") {
+		oplmode = OPL_opl3;
+		handler = new OPL3DUOBOARD::Handler(oplport.c_str());
 	} else {
 		handler = new DBOPL::Handler();
 	}
