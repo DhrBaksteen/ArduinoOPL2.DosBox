@@ -1,3 +1,6 @@
+## This repo is no longer maintained. Better DosBox support for the OPL2 Audio Board and OPL3 Duo! has been added to DosBox-X
+See [https://dosbox-x.com/](https://dosbox-x.com/) and [https://github.com/joncampbell123/dosbox-x](https://github.com/joncampbell123/dosbox-x)
+
 # DosBox for OPL2 Audio Board
 This repository contains a version of DosBox SVN 0.74 that supports OPL2 passthrough to the OPL2 Audio Board over serial port. Install the accompanying Arduino sketch on your Arduino and enjoy real OPL2 audio from DosBox!
 
