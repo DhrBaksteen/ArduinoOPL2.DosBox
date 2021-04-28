@@ -1,5 +1,6 @@
 ## This repo is no longer maintained. Better DosBox support for the OPL2 Audio Board and OPL3 Duo! has been added to DosBox-X
 See [https://dosbox-x.com/](https://dosbox-x.com/) and [https://github.com/joncampbell123/dosbox-x](https://github.com/joncampbell123/dosbox-x)
+
 For configuration in DosBox-X see [https://github.com/DhrBaksteen/ArduinoOPL2/wiki/DosBox-X-configuration](https://github.com/DhrBaksteen/ArduinoOPL2/wiki/DosBox-X-configuration)
 
 # DosBox for OPL2 Audio Board
